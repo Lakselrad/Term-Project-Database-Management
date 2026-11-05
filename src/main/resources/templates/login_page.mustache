@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+{{> fragments/head}}
+
+<body class="auth-body">
+    <main class="auth-wrapper">
+        <div class="auth-card">
+            <a class="brand brand-large" href="/login"><i class="fas fa-gamepad"></i> Critical<span>Hit</span></a>
+            <p class="muted auth-tagline">Rate, review and track the games you play.</p>
+
+            {{> fragments/messages}}
+
+            <form method="post" action="/login" class="form">
+                <label class="field">
+                    <span>Username</span>
+                    <input name="username" type="text" autocomplete="username" required autofocus>
+                </label>
+                <label class="field">
+                    <span>Password</span>
+                    <input name="password" type="password" autocomplete="current-password" required>
+                </label>
+                <button type="submit" class="btn btn-primary btn-block">Log in</button>
+            </form>
+
+            <p class="auth-switch">New here? <a href="/register">Create an account</a></p>
+
+            <div class="demo-hint">
+                <i class="fas fa-info-circle"></i>
+                Demo accounts: <code>alex</code>, <code>jordan</code>, <code>sam</code>
+                &middot; password <code>{{demoPassword}}</code>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

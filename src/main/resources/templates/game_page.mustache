@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+{{> fragments/head}}
+
+<body>
+    {{> fragments/navbar}}
+
+    <main class="container">
+        {{> fragments/messages}}
+
+        {{#game}}
+        <section class="game-hero">
+            <div class="cover cover-large" style="{{coverStyle}}">
+                <span class="cover-initials">{{initials}}</span>
+            </div>
+            <div class="game-info">
+                <a href="/games?genre={{genre}}" class="tag">{{genre}}</a>
+                <h1>{{title}}</h1>
+                <p class="muted">{{developer}} &middot; {{publisher}} &middot; {{releaseYear}}</p>
+                <div class="platforms">
+                    {{#platformList}}<a class="tag tag-outline" href="/games?platform={{.}}">{{.}}</a>{{/platformList}}
+                </div>
+                <p class="game-description">{{description}}</p>
+
+                <form class="library-form" method="post" action="/library/{{gameId}}">
+                    <label for="library-status"><i class="fas fa-book"></i> My library:</label>
+                    <select id="library-status" name="status" data-autosubmit>
+                        {{#libraryOptions}}<option value="{{value}}" {{#selected}}selected{{/selected}}>{{label}}</option>{{/libraryOptions}}
+                    </select>
+                    <noscript><button type="submit" class="btn btn-ghost">Save</button></noscript>
+                </form>
+            </div>
+
+            <div class="score-panel">
+                <div class="big-score {{scoreClass}}">{{avgRatingDisplay}}</div>
+                <div class="stars">{{stars}}</div>
+                <div class="muted small">{{reviewCount}} reviews</div>
+                <div class="rating-bars">
+                    {{#ratingBars}}
+                    <div class="rating-bar-row">
+                        <span>{{stars}}&#9733;</span>
+                        <div class="rating-bar"><div class="rating-bar-fill" style="width: {{percent}}%"></div></div>
+                        <span class="muted">{{count}}</span>
+                    </div>
+                    {{/ratingBars}}
+                </div>
+            </div>
+        </section>
+        {{/game}}
+
+        <div class="two-column">
+            <section class="section" id="reviews">
+                <div class="section-header">
+                    <h2><i class="fas fa-comments"></i> Reviews</h2>
+                    <div class="pill-group">
+                        {{#reviewSortOptions}}<a class="pill {{#selected}}pill-active{{/selected}}" href="?sort={{value}}#reviews">{{label}}</a>{{/reviewSortOptions}}
+                    </div>
+                </div>
+
+                {{#isNoReviews}}
+                <div class="empty-state">
+                    <i class="fas fa-feather-alt"></i>
+                    <p>No reviews yet. Be the first!</p>
+                </div>
+                {{/isNoReviews}}
+
+                <div class="review-list">
+                    {{#reviews}}{{> fragments/review_card}}{{/reviews}}
+                </div>
+            </section>
+
+            <aside class="section" id="write-review">
+                <div class="card">
+                    <h2>{{#myReview}}Edit your review{{/myReview}}{{^myReview}}Write a review{{/myReview}}</h2>
+                    <form method="post" action="/games/{{#game}}{{gameId}}{{/game}}/review" class="form">
+                        <div class="field">
+                            <span>Your rating</span>
+                            <div class="star-input">
+                                {{#ratingOptions}}
+                                <input type="radio" id="star{{value}}" name="rating" value="{{value}}" {{#selected}}checked{{/selected}} required>
+                                <label for="star{{value}}" title="{{label}}">&#9733;</label>
+                                {{/ratingOptions}}
+                            </div>
+                        </div>
+                        <label class="field">
+                            <span>Headline</span>
+                            <input name="title" type="text" maxlength="100" required value="{{#myReview}}{{title}}{{/myReview}}">
+                        </label>
+                        <label class="field">
+                            <span>Review</span>
+                            <textarea name="body" rows="6" maxlength="2000" required data-counter>{{#myReview}}{{body}}{{/myReview}}</textarea>
+                            <small class="muted" data-counter-output></small>
+                        </label>
+                        <button type="submit" class="btn btn-primary btn-block">
+                            {{#myReview}}Update review{{/myReview}}{{^myReview}}Post review{{/myReview}}
+                        </button>
+                    </form>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    {{> fragments/footer}}
+</body>
+
+</html>

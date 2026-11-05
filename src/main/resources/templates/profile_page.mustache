@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+{{> fragments/head}}
+
+<body>
+    {{> fragments/navbar}}
+
+    <main class="container">
+        {{> fragments/messages}}
+
+        {{#profileUser}}
+        <section class="profile-header">
+            <span class="avatar large" style="background: {{avatarColor}}">{{initial}}</span>
+            <div>
+                <h1>{{displayName}}</h1>
+                <p class="muted">@{{username}} &middot; Joined {{joinedDisplay}}</p>
+                {{#bio}}<p class="profile-bio">{{bio}}</p>{{/bio}}
+            </div>
+        </section>
+        {{/profileUser}}
+
+        <section class="stat-grid">
+            <div class="stat-tile"><span class="stat-value">{{reviewCount}}</span><span class="stat-label">Reviews</span></div>
+            <div class="stat-tile"><span class="stat-value">{{avgGiven}}</span><span class="stat-label">Avg. rating given</span></div>
+            <div class="stat-tile"><span class="stat-value">{{libraryCount}}</span><span class="stat-label">Games in library</span></div>
+            <div class="stat-tile"><span class="stat-value">{{completedCount}}</span><span class="stat-label">Completed</span></div>
+            <div class="stat-tile"><span class="stat-value stat-text">{{favoriteGenre}}</span><span class="stat-label">Favorite genre</span></div>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <h2><i class="fas fa-book"></i> Library</h2>
+                {{#isOwnProfile}}<a href="/library" class="link">Manage library <i class="fas fa-arrow-right"></i></a>{{/isOwnProfile}}
+            </div>
+            <div class="game-grid">
+                {{#libraryPreview}}{{> fragments/game_card}}{{/libraryPreview}}
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <h2><i class="fas fa-comments"></i> Reviews</h2>
+            </div>
+            {{#isNoReviews}}
+            <div class="empty-state">
+                <i class="fas fa-feather-alt"></i>
+                <p>No reviews yet.</p>
+            </div>
+            {{/isNoReviews}}
+            <div class="review-list">
+                {{#reviews}}{{> fragments/review_card}}{{/reviews}}
+            </div>
+        </section>
+    </main>
+
+    {{> fragments/footer}}
+</body>
+
+</html>

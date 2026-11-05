@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+{{> fragments/head}}
+
+<body>
+    {{> fragments/navbar}}
+
+    <main class="container">
+        {{> fragments/messages}}
+
+        <div class="page-header">
+            <h1>Browse games</h1>
+            <p class="muted">{{resultCount}} games found</p>
+        </div>
+
+        <form class="filter-bar" action="/games" method="get">
+            <input name="q" type="search" value="{{query}}" placeholder="Title or developer">
+            <select name="genre" data-autosubmit>
+                {{#genreOptions}}<option value="{{value}}" {{#selected}}selected{{/selected}}>{{label}}</option>{{/genreOptions}}
+            </select>
+            <select name="platform" data-autosubmit>
+                {{#platformOptions}}<option value="{{value}}" {{#selected}}selected{{/selected}}>{{label}}</option>{{/platformOptions}}
+            </select>
+            <select name="sort" data-autosubmit>
+                {{#sortOptions}}<option value="{{value}}" {{#selected}}selected{{/selected}}>{{label}}</option>{{/sortOptions}}
+            </select>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-filter"></i> Apply</button>
+            <a href="/games" class="btn btn-ghost">Reset</a>
+        </form>
+
+        {{#isNoContent}}
+        <div class="empty-state">
+            <i class="fas fa-ghost"></i>
+            <p>No games match those filters.</p>
+            <a href="/games" class="btn btn-ghost">Clear filters</a>
+        </div>
+        {{/isNoContent}}
+
+        <div class="game-grid">
+            {{#games}}{{> fragments/game_card}}{{/games}}
+        </div>
+    </main>
+
+    {{> fragments/footer}}
+</body>
+
+</html>

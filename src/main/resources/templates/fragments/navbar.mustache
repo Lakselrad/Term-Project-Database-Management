@@ -1,0 +1,31 @@
+<nav class="navbar">
+    <div class="nav-inner">
+        <a class="brand" href="/"><i class="fas fa-gamepad"></i> Critical<span>Hit</span></a>
+        {{#currentUser}}
+        <button class="nav-toggle" type="button" aria-label="Menu" data-nav-toggle><i class="fas fa-bars"></i></button>
+        <div class="nav-links" data-nav-links>
+            <a href="/" class="{{#activeHome}}active{{/activeHome}}"><i class="fas fa-home"></i> Home</a>
+            <a href="/games" class="{{#activeBrowse}}active{{/activeBrowse}}"><i class="fas fa-th-large"></i> Browse</a>
+            <a href="/top" class="{{#activeTop}}active{{/activeTop}}"><i class="fas fa-trophy"></i> Top Rated</a>
+            <a href="/library" class="{{#activeLibrary}}active{{/activeLibrary}}"><i class="fas fa-book"></i> My Library</a>
+            <a href="/assistant" class="{{#activeAssistant}}active{{/activeAssistant}}"><i class="fas fa-magic"></i> Assistant</a>
+        </div>
+        <form class="nav-search" action="/games" method="get">
+            <i class="fas fa-search"></i>
+            <input name="q" type="search" placeholder="Search games..." aria-label="Search games">
+        </form>
+        <div class="nav-user" data-dropdown>
+            <button type="button" class="nav-user-button" data-dropdown-toggle>
+                <span class="avatar small" style="background: {{avatarColor}}">{{initial}}</span>
+                <span class="nav-user-name">{{displayName}}</span>
+                <i class="fas fa-caret-down"></i>
+            </button>
+            <div class="dropdown-menu">
+                <a href="/users/{{username}}" class="{{#activeProfile}}active{{/activeProfile}}"><i class="fas fa-user"></i> My profile</a>
+                <a href="/library"><i class="fas fa-book"></i> My library</a>
+                <a href="/logout"><i class="fas fa-sign-out-alt"></i> Log out</a>
+            </div>
+        </div>
+        {{/currentUser}}
+    </div>
+</nav>

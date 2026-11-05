@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+{{> fragments/head}}
+
+<body>
+    {{> fragments/navbar}}
+
+    <main class="container">
+        {{> fragments/messages}}
+
+        <section class="hero">
+            <div>
+                {{#currentUser}}<h1>Welcome back, {{displayName}}</h1>{{/currentUser}}
+                <p class="muted">What are you playing next? Search the catalog or ask the assistant.</p>
+            </div>
+            <form class="hero-search" action="/games" method="get">
+                <input name="q" type="search" placeholder="Search by title or developer...">
+                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Search</button>
+            </form>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <h2><i class="fas fa-star"></i> Top rated</h2>
+                <a href="/top" class="link">See all rankings <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="game-grid">
+                {{#topRated}}{{> fragments/game_card}}{{/topRated}}
+            </div>
+        </section>
+
+        <div class="two-column">
+            <section class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-comments"></i> Latest reviews</h2>
+                </div>
+                <div class="review-list">
+                    {{#recentReviews}}{{> fragments/review_card}}{{/recentReviews}}
+                </div>
+            </section>
+
+            <aside class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-fire"></i> Most reviewed</h2>
+                    <a href="/games?sort=reviews" class="link">More</a>
+                </div>
+                <div class="compact-list">
+                    {{#mostReviewed}}
+                    <a class="compact-item" href="/games/{{gameId}}">
+                        <span class="mini-cover" style="{{coverStyle}}">{{initials}}</span>
+                        <span class="compact-text">
+                            <strong>{{title}}</strong>
+                            <span class="muted small">{{reviewCount}} reviews &middot; {{genre}}</span>
+                        </span>
+                        <span class="score-badge inline {{scoreClass}}">{{avgRatingDisplay}}</span>
+                    </a>
+                    {{/mostReviewed}}
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    {{> fragments/footer}}
+</body>
+
+</html>

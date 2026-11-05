@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+{{> fragments/head}}
+
+<body>
+    {{> fragments/navbar}}
+
+    <main class="container">
+        {{> fragments/messages}}
+
+        <div class="page-header">
+            <h1><i class="fas fa-magic"></i> Game assistant</h1>
+            <p class="muted">Describe what you feel like playing in plain English.</p>
+        </div>
+
+        <form class="assistant-form" action="/assistant" method="get">
+            <textarea name="q" rows="2" placeholder="e.g. Highly rated RPGs on PC released after 2018" required>{{prompt}}</textarea>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Ask</button>
+        </form>
+
+        <div class="pill-group pill-group-wrap">
+            <span class="muted small">Try:</span>
+            {{#examples}}<a class="pill" href="/assistant?q={{.}}">{{.}}</a>{{/examples}}
+        </div>
+
+        {{#result}}
+        <section class="section">
+            <div class="assistant-answer card">
+                <div class="assistant-icon"><i class="fas fa-robot"></i></div>
+                <div>
+                    <p>I found <strong>{{gameCount}}</strong> games for "<em>{{prompt}}</em>".</p>
+                    <div class="pill-group pill-group-wrap">
+                        {{#understood}}<span class="tag">{{.}}</span>{{/understood}}
+                    </div>
+                </div>
+            </div>
+
+            {{#empty}}
+            <div class="empty-state">
+                <i class="fas fa-search"></i>
+                <p>Nothing matched. Try fewer filters.</p>
+            </div>
+            {{/empty}}
+
+            <div class="game-grid">
+                {{#games}}{{> fragments/game_card}}{{/games}}
+            </div>
+        </section>
+        {{/result}}
+    </main>
+
+    {{> fragments/footer}}
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+<article class="review-card">
+    <header class="review-header">
+        <a class="avatar" style="background: {{userColor}}" href="/users/{{username}}">{{userInitial}}</a>
+        <div class="review-meta">
+            <div>
+                <a class="review-user" href="/users/{{username}}">{{username}}</a>
+                <span class="muted">reviewed</span>
+                <a class="review-game" href="/games/{{gameId}}">{{gameTitle}}</a>
+            </div>
+            <div class="muted small">{{createdAtDisplay}}{{#edited}} &middot; edited{{/edited}}</div>
+        </div>
+        <div class="stars review-stars" title="{{rating}} out of 5">{{stars}}</div>
+    </header>
+    <h4 class="review-title">{{title}}</h4>
+    <p class="review-body">{{body}}</p>
+    <footer class="review-footer">
+        {{^own}}
+        <form method="post" action="/reviews/{{reviewId}}/helpful">
+            <button type="submit" class="chip {{#markedHelpful}}chip-active{{/markedHelpful}}">
+                <i class="fas fa-thumbs-up"></i> Helpful ({{helpfulCount}})
+            </button>
+        </form>
+        {{/own}}
+        {{#own}}
+        <span class="muted small"><i class="fas fa-thumbs-up"></i> {{helpfulCount}} found this helpful</span>
+        <a class="chip" href="/games/{{gameId}}#write-review"><i class="fas fa-pen"></i> Edit</a>
+        <form method="post" action="/reviews/{{reviewId}}/delete" data-confirm="Delete this review? This cannot be undone.">
+            <button type="submit" class="chip chip-danger"><i class="fas fa-trash"></i> Delete</button>
+        </form>
+        {{/own}}
+    </footer>
+</article>

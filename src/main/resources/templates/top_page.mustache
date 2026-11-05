@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+{{> fragments/head}}
+
+<body>
+    {{> fragments/navbar}}
+
+    <main class="container">
+        {{> fragments/messages}}
+
+        <div class="page-header">
+            <h1><i class="fas fa-trophy"></i> Top rated games</h1>
+            <p class="muted">Ranked by average community rating. Games need at least {{minReviews}} reviews to be ranked.</p>
+        </div>
+
+        <div class="pill-group pill-group-wrap">
+            {{#genreOptions}}<a class="pill {{#selected}}pill-active{{/selected}}" href="/top?genre={{value}}">{{label}}</a>{{/genreOptions}}
+        </div>
+
+        {{#isNoContent}}
+        <div class="empty-state">
+            <i class="fas fa-trophy"></i>
+            <p>No ranked games in this genre yet.</p>
+        </div>
+        {{/isNoContent}}
+
+        <div class="rank-table">
+            {{#rankings}}
+            <a class="rank-row {{#podium}}rank-podium{{/podium}}" href="/games/{{#game}}{{gameId}}{{/game}}">
+                <span class="rank-number rank-{{rank}}">#{{rank}}</span>
+                {{#game}}
+                <span class="mini-cover" style="{{coverStyle}}">{{initials}}</span>
+                <span class="rank-title">
+                    <strong>{{title}}</strong>
+                    <span class="muted small">{{developer}} &middot; {{releaseYear}} &middot; {{genre}}</span>
+                </span>
+                <span class="rank-reviews muted small">{{reviewCount}} reviews</span>
+                <span class="stars rank-stars">{{stars}}</span>
+                <span class="score-badge inline {{scoreClass}}">{{avgRatingDisplay}}</span>
+                {{/game}}
+            </a>
+            {{/rankings}}
+        </div>
+    </main>
+
+    {{> fragments/footer}}
+</body>
+
+</html>

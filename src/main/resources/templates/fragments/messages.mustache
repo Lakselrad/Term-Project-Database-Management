@@ -1,0 +1,12 @@
+{{#errorMessage}}
+<div class="flash flash-error" data-flash>
+    <i class="fas fa-exclamation-circle"></i> <span>{{.}}</span>
+    <button type="button" class="flash-close" data-flash-close aria-label="Dismiss">&times;</button>
+</div>
+{{/errorMessage}}
+{{#infoMessage}}
+<div class="flash flash-info" data-flash>
+    <i class="fas fa-check-circle"></i> <span>{{.}}</span>
+    <button type="button" class="flash-close" data-flash-close aria-label="Dismiss">&times;</button>
+</div>
+{{/infoMessage}}

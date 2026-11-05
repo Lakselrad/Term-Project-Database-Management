@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+{{> fragments/head}}
+
+<body>
+    {{> fragments/navbar}}
+
+    <main class="container">
+        <div class="empty-state error-page">
+            <i class="fas fa-skull-crossbones"></i>
+            <h1>{{status}} &middot; Game over</h1>
+            <p class="muted">{{error}}</p>
+            <a href="/" class="btn btn-primary">Respawn at home</a>
+        </div>
+    </main>
+
+    {{> fragments/footer}}
+</body>
+
+</html>

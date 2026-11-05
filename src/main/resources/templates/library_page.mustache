@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+{{> fragments/head}}
+
+<body>
+    {{> fragments/navbar}}
+
+    <main class="container">
+        {{> fragments/messages}}
+
+        <div class="page-header">
+            <h1><i class="fas fa-book"></i> My library</h1>
+            <p class="muted">Track what you are playing, finished, want to play, or gave up on.</p>
+        </div>
+
+        <div class="tabs">
+            {{#tabs}}
+            <a class="tab {{#active}}tab-active{{/active}}" href="/library?status={{value}}">
+                {{label}} <span class="tab-count">{{count}}</span>
+            </a>
+            {{/tabs}}
+        </div>
+
+        {{#isNoContent}}
+        <div class="empty-state">
+            <i class="fas fa-box-open"></i>
+            <p>Nothing here yet. Find a game and add it to your library.</p>
+            <a href="/games" class="btn btn-primary">Browse games</a>
+        </div>
+        {{/isNoContent}}
+
+        <div class="game-grid">
+            {{#entries}}
+            <div class="library-item">
+                <span class="status-badge {{statusClass}}">{{status}}</span>
+                {{#game}}{{> fragments/game_card}}{{/game}}
+                <div class="library-item-actions">
+                    <form method="post" action="/library/{{gameId}}">
+                        <select name="status" data-autosubmit aria-label="Change status">
+                            {{#statusOptions}}<option value="{{value}}" {{#selected}}selected{{/selected}}>{{label}}</option>{{/statusOptions}}
+                        </select>
+                    </form>
+                    <form method="post" action="/library/{{gameId}}" data-confirm="Remove this game from your library?">
+                        <input type="hidden" name="status" value="">
+                        <button type="submit" class="icon-button" title="Remove from library"><i class="fas fa-times"></i></button>
+                    </form>
+                </div>
+                <p class="muted small">Added {{addedOnDisplay}}</p>
+            </div>
+            {{/entries}}
+        </div>
+    </main>
+
+    {{> fragments/footer}}
+</body>
+
+</html>

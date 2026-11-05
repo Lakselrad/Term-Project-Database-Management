@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+{{> fragments/head}}
+
+<body class="auth-body">
+    <main class="auth-wrapper">
+        <div class="auth-card">
+            <a class="brand brand-large" href="/login"><i class="fas fa-gamepad"></i> Critical<span>Hit</span></a>
+            <p class="muted auth-tagline">Create your account to start reviewing.</p>
+
+            {{> fragments/messages}}
+
+            <form method="post" action="/register" class="form" data-register-form>
+                <label class="field">
+                    <span>Username</span>
+                    <input name="username" type="text" autocomplete="username" required
+                        pattern="[A-Za-z0-9_]{3,20}" title="3-20 letters, numbers or underscores">
+                    <small class="muted">3-20 letters, numbers or underscores. This is shown on your reviews.</small>
+                </label>
+                <label class="field">
+                    <span>Display name</span>
+                    <input name="displayName" type="text" maxlength="40" required>
+                </label>
+                <label class="field">
+                    <span>Password</span>
+                    <input name="password" type="password" autocomplete="new-password" minlength="8" required>
+                </label>
+                <label class="field">
+                    <span>Repeat password</span>
+                    <input name="passwordRepeat" type="password" autocomplete="new-password" minlength="8" required>
+                    <small class="field-error" data-password-mismatch hidden>Passwords do not match.</small>
+                </label>
+                <button type="submit" class="btn btn-primary btn-block">Create account</button>
+            </form>
+
+            <p class="auth-switch">Already have an account? <a href="/login">Log in</a></p>
+        </div>
+    </main>
+</body>
+
+</html>
